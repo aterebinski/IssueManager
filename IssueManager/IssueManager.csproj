@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>aspnet-IssueManager-81040BE8-273F-4883-A0D6-62F5EFCB44A2</UserSecretsId>
-    <AssemblyName>UsersAndGroupManager</AssemblyName>
-    <RootNamespace>UsersAndGroupManagerIssueManager</RootNamespace>
+    <AssemblyName>IssueManager</AssemblyName>
+    <RootNamespace>IssueManager</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

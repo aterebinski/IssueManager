@@ -53,5 +53,9 @@ namespace IssueManager.Data
 */
 
         }
+
+        public virtual DbSet<Entity> Entities { get; set; }
+        public virtual DbSet<Assignment> Assignments { get; set; }
+        public virtual DbSet<Job> Jobs { get; set; }
     }
 }
