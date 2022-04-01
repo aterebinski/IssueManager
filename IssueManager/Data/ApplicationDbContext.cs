@@ -20,42 +20,46 @@ namespace IssueManager.Data
             base.OnModelCreating(builder);
             builder.HasDefaultSchema("db");
 
-/*
-            builder.Entity<IdentityUser>(entity =>
-            {
-                entity.ToTable(name: "User");
-            });
+            /*
+                        builder.Entity<IdentityUser>(entity =>
+                        {
+                            entity.ToTable(name: "User");
+                        });
 
-            builder.Entity<IdentityRole>(entity =>
-            {
-                entity.ToTable(name: "Role");
-            });
-            builder.Entity<IdentityUserRole<string>>(entity =>
-            {
-                entity.ToTable("UserRoles");
-            });
-            builder.Entity<IdentityUserClaim<string>>(entity =>
-            {
-                entity.ToTable("UserClaims");
-            });
-            builder.Entity<IdentityUserLogin<string>>(entity =>
-            {
-                entity.ToTable("UserLogins");
-            });
-            builder.Entity<IdentityRoleClaim<string>>(entity =>
-            {
-                entity.ToTable("RoleClaims");
-            });
-            builder.Entity<IdentityUserToken<string>>(entity =>
-            {
-                entity.ToTable("UserTokens");
-            });
-*/
+                        builder.Entity<IdentityRole>(entity =>
+                        {
+                            entity.ToTable(name: "Role");
+                        });
+                        builder.Entity<IdentityUserRole<string>>(entity =>
+                        {
+                            entity.ToTable("UserRoles");
+                        });
+                        builder.Entity<IdentityUserClaim<string>>(entity =>
+                        {
+                            entity.ToTable("UserClaims");
+                        });
+                        builder.Entity<IdentityUserLogin<string>>(entity =>
+                        {
+                            entity.ToTable("UserLogins");
+                        });
+                        builder.Entity<IdentityRoleClaim<string>>(entity =>
+                        {
+                            entity.ToTable("RoleClaims");
+                        });
+                        builder.Entity<IdentityUserToken<string>>(entity =>
+                        {
+                            entity.ToTable("UserTokens");
+                        });
+            */
 
         }
 
         public virtual DbSet<Entity> Entities { get; set; }
         public virtual DbSet<Assignment> Assignments { get; set; }
+        public virtual DbSet<AssignmentNote> AssignmentNotes { get; set; } 
         public virtual DbSet<Job> Jobs { get; set; }
+        public virtual DbSet<JobNote> JobNotes { get; set; }
+        public virtual DbSet<EntityGroup> EntityGroups { get; set; }
+        public virtual DbSet<EntityGroupElement> EntityGroupElements { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IssueManager.Models
 {
-    public class Entity //Przedsiębiorstwo
+    public class EntityGroup
     {
         [Key]
         public int Id { get; set; }

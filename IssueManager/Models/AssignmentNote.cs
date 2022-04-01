@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 
 namespace IssueManager.Models
 {
-    public class Assignment
+    public class AssignmentNote
     {
         public int Id { get; set; }
-        public string Name { get; set; }
         public string Text { get; set; }
         public bool Del { get; set; }
-        public int Status { get; set; }
         public DateTime CreateDateTime { get; set; }
         public int CreateUserId { get; set; }
         public DateTime ModifyDateTime { get; set; }
