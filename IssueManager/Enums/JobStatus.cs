@@ -7,11 +7,11 @@ namespace IssueManager.Enums
 {
     public enum JobStatus
     {
-        Added =1,
-        Planned =2,
-        Pending =3,
-        Done =4,
-        Deleted =5
+        Added,
+        Planned,
+        Pending,
+        Done,
+        Deleted
     }
     
 }

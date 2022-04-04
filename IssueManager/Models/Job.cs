@@ -12,6 +12,7 @@ namespace IssueManager.Models
         public int AssignmentId { get; set; }
         public bool Del { get; set; }
         public int Status { get; set; }
+        public bool Checked { get; set; }
         public DateTime CreateDateTime { get; set; }
         public int CreateUserId { get; set; }
         public DateTime ModifyDateTime { get; set; }

@@ -7,10 +7,13 @@ namespace IssueManager.Enums
 {
     public enum AssignmentStatus
     {
+        ToPlan,
+        Pending,
         Current,
-        Urgent,
         Done,
+        ToReturn,
         Obsolete,
+        Hidden,
         Deleted
     }
 }
