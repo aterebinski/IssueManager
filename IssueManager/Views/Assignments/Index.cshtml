@@ -12,35 +12,14 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <th class="w-25">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th class="w-50">
                 @Html.DisplayNameFor(model => model.Text)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Del)
-            </th>
-            <th>
+            <th class="w-25">
                 @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreateUserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifyDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifyUserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HistoryPreviousId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HistoryNextId)
             </th>
             <th></th>
         </tr>
@@ -55,28 +34,7 @@
                 @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Del)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateUserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifyDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifyUserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HistoryPreviousId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HistoryNextId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IssueManager.Data;
 using IssueManager.Models;
+using IssueManager.Enums;
 
 namespace IssueManager.Controllers
 {
@@ -58,6 +59,10 @@ namespace IssueManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                DateTime dateTime = new DateTime();
+                assignment.CreateDateTime = dateTime;
+                assignment.Del = false;
+                assignment.Status = (int)AssignmentStatus.ToPlan;
                 _context.Add(assignment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
