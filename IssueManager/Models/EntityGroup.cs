@@ -12,5 +12,7 @@ namespace IssueManager.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public bool Del { get; set; }
+
+        public virtual ICollection<EntityGroupElement> EntityGroupElements { get; set; }
     }
 }

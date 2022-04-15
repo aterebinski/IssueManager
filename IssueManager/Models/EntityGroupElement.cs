@@ -18,5 +18,8 @@ namespace IssueManager.Models
         public int ModifyUserId { get; set; }
         public int HistoryPreviousId { get; set; }
         public int HistoryNextId { get; set; }
+
+        public virtual Entity Entity { get; set; }
+        public virtual EntityGroup EntityGroup { get; set; }
     }
 }
