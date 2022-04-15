@@ -7,26 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IssueManager.Data;
 using IssueManager.Models;
-using IssueManager.Enums;
 
 namespace IssueManager.Controllers
 {
-    public class AssignmentsController : Controller
+    public class EntityGroupsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AssignmentsController(ApplicationDbContext context)
+        public EntityGroupsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Assignments
+        // GET: EntityGroups
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Assignments.ToListAsync());
+            return View(await _context.EntityGroups.ToListAsync());
         }
 
-        // GET: Assignments/Details/5
+        // GET: EntityGroups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace IssueManager.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments
+            var entityGroup = await _context.EntityGroups
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (assignment == null)
+            if (entityGroup == null)
             {
                 return NotFound();
             }
 
-            return View(assignment);
+            return View(entityGroup);
         }
 
-        // GET: Assignments/Create
+        // GET: EntityGroups/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Assignments/Create
+        // POST: EntityGroups/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Text,Del,Status,CreateDateTime,CreateUserId,ModifyDateTime,ModifyUserId,HistoryPreviousId,HistoryNextId")] Assignment assignment)
+        public async Task<IActionResult> Create([Bind("Id,Name,Del")] EntityGroup entityGroup)
         {
             if (ModelState.IsValid)
             {
-                assignment.CreateDateTime = DateTime.Now;
-                assignment.Del = false;
-                assignment.Status = (int)AssignmentStatus.ToPlan;
-                _context.Add(assignment);
+                _context.Add(entityGroup);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(assignment);
+            return View(entityGroup);
         }
 
-        // GET: Assignments/Edit/5
+        // GET: EntityGroups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +73,22 @@ namespace IssueManager.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments.FindAsync(id);
-            if (assignment == null)
+            var entityGroup = await _context.EntityGroups.FindAsync(id);
+            if (entityGroup == null)
             {
                 return NotFound();
             }
-            return View(assignment);
+            return View(entityGroup);
         }
 
-        // POST: Assignments/Edit/5
+        // POST: EntityGroups/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Text,Del,Status,CreateDateTime,CreateUserId,ModifyDateTime,ModifyUserId,HistoryPreviousId,HistoryNextId")] Assignment assignment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Del")] EntityGroup entityGroup)
         {
-            if (id != assignment.Id)
+            if (id != entityGroup.Id)
             {
                 return NotFound();
             }
@@ -101,12 +97,12 @@ namespace IssueManager.Controllers
             {
                 try
                 {
-                    _context.Update(assignment);
+                    _context.Update(entityGroup);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AssignmentExists(assignment.Id))
+                    if (!EntityGroupExists(entityGroup.Id))
                     {
                         return NotFound();
                     }
@@ -117,10 +113,10 @@ namespace IssueManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(assignment);
+            return View(entityGroup);
         }
 
-        // GET: Assignments/Delete/5
+        // GET: EntityGroups/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,30 +124,30 @@ namespace IssueManager.Controllers
                 return NotFound();
             }
 
-            var assignment = await _context.Assignments
+            var entityGroup = await _context.EntityGroups
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (assignment == null)
+            if (entityGroup == null)
             {
                 return NotFound();
             }
 
-            return View(assignment);
+            return View(entityGroup);
         }
 
-        // POST: Assignments/Delete/5
+        // POST: EntityGroups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var assignment = await _context.Assignments.FindAsync(id);
-            _context.Assignments.Remove(assignment);
+            var entityGroup = await _context.EntityGroups.FindAsync(id);
+            _context.EntityGroups.Remove(entityGroup);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AssignmentExists(int id)
+        private bool EntityGroupExists(int id)
         {
-            return _context.Assignments.Any(e => e.Id == id);
+            return _context.EntityGroups.Any(e => e.Id == id);
         }
     }
 }

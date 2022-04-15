@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IssueManager.Models.Assignment>
+﻿@model IEnumerable<IssueManager.Models.EntityGroup>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,14 +12,11 @@
 <table class="table">
     <thead>
         <tr>
-            <th class="w-25">
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th class="w-50">
-                @Html.DisplayNameFor(model => model.Text)
-            </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.Del)
             </th>
             <th></th>
         </tr>
@@ -31,10 +28,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.Del)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
