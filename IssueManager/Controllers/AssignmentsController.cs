@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using IssueManager.Data;
 using IssueManager.Models;
 using IssueManager.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace IssueManager.Controllers
 {
     public class AssignmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AssignmentsController(ApplicationDbContext context)
+        public AssignmentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager; 
         }
 
         // GET: Assignments
@@ -60,6 +63,7 @@ namespace IssueManager.Controllers
             if (ModelState.IsValid)
             {
                 assignment.CreateDateTime = DateTime.Now;
+                assignment.CreateUserId = _userManager.GetUserId(User);
                 assignment.Del = false;
                 assignment.Status = (int)AssignmentStatus.ToPlan;
                 _context.Add(assignment);

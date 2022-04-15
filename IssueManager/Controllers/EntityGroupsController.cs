@@ -46,6 +46,7 @@ namespace IssueManager.Controllers
         // GET: EntityGroups/Create
         public IActionResult Create()
         {
+            ICollection<Entity> entities = _context.Entities.ToList();  
             return View();
         }
 
