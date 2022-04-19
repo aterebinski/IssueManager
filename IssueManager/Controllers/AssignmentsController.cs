@@ -27,7 +27,8 @@ namespace IssueManager.Controllers
         // GET: Assignments
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Assignments.ToListAsync());
+            //return View(await _context.Assignments.ToListAsync());
+            return View(await _context.Assignments.Where<Assignment>(i => i.Del != true).ToListAsync());   
         }
 
         // GET: Assignments/Details/5
