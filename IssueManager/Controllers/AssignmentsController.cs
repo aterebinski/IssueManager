@@ -9,6 +9,7 @@ using IssueManager.Data;
 using IssueManager.Models;
 using IssueManager.Enums;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace IssueManager.Controllers
 {
@@ -63,7 +64,10 @@ namespace IssueManager.Controllers
             if (ModelState.IsValid)
             {
                 assignment.CreateDateTime = DateTime.Now;
-                assignment.CreateUserId = _userManager.GetUserId(User);
+                //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                assignment.CreateUserId = _userManager.GetUserId(HttpContext.User);
+                //                assignment.CreateUserId = int.Parse(_userManager.GetUserId(User));
+                //assignment.CreateUserId = int.Parse(userId);
                 assignment.Del = false;
                 assignment.Status = (int)AssignmentStatus.ToPlan;
                 _context.Add(assignment);

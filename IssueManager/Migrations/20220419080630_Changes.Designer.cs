@@ -4,6 +4,7 @@ using IssueManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220419080630_Changes")]
+    partial class Changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,8 +113,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CreateUserId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Del")
                         .HasColumnType("bit");
@@ -126,8 +128,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("ModifyDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifyUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ModifyUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -191,8 +193,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CreateUserId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Del")
                         .HasColumnType("bit");
@@ -206,8 +208,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("ModifyDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifyUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ModifyUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -228,8 +230,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CreateUserId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Del")
                         .HasColumnType("bit");
@@ -243,8 +245,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("ModifyDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifyUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ModifyUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -265,8 +267,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CreateUserId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Del")
                         .HasColumnType("bit");
@@ -286,8 +288,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("ModifyDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifyUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ModifyUserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -318,8 +320,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CreateUserId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Del")
                         .HasColumnType("bit");
@@ -336,8 +338,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("ModifyDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifyUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ModifyUserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -358,8 +360,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CreateUserId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Del")
                         .HasColumnType("bit");
@@ -373,8 +375,8 @@ namespace IssueManager.Migrations
                     b.Property<DateTime>("ModifyDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifyUserId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ModifyUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
