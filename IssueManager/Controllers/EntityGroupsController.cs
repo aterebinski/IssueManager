@@ -7,22 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IssueManager.Data;
 using IssueManager.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace IssueManager.Controllers
 {
     public class EntityGroupsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public EntityGroupsController(ApplicationDbContext context)
+        public EntityGroupsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;  
         }
 
         // GET: EntityGroups
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EntityGroups.ToListAsync());
+            return View(await _context.EntityGroups.Where(i=>i.Del == false).OrderBy(i=>i.Name).ToListAsync());
         }
 
         // GET: EntityGroups/Details/5
@@ -59,6 +62,9 @@ namespace IssueManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                entityGroup.Del = false;
+                entityGroup.CreateDateTime = DateTime.Now;
+                entityGroup.CreateUserId = _userManager.GetUserId(HttpContext.User);
                 _context.Add(entityGroup);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -141,7 +147,9 @@ namespace IssueManager.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var entityGroup = await _context.EntityGroups.FindAsync(id);
-            _context.EntityGroups.Remove(entityGroup);
+            //_context.EntityGroups.Remove(entityGroup);
+            entityGroup.Del = true;
+            _context.Update(entityGroup);   
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
