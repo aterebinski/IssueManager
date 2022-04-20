@@ -22,7 +22,7 @@ namespace IssueManager.Controllers
         // GET: Entities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Entities.ToListAsync());
+            return View(await _context.Entities.Where(i => i.Del == false).OrderBy(i=>i.Name).ToListAsync());
         }
 
         // GET: Entities/Details/5
@@ -58,6 +58,7 @@ namespace IssueManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                entity.Del = false;
                 _context.Add(entity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -140,7 +141,9 @@ namespace IssueManager.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var entity = await _context.Entities.FindAsync(id);
-            _context.Entities.Remove(entity);
+            //_context.Entities.Remove(entity);
+            entity.Del = true;
+            _context.Update(entity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
