@@ -47,9 +47,10 @@ namespace IssueManager.Controllers
         }
 
         // GET: Entities/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            ICollection<Entity> entities = await _context.Entities.Where(_entity => _entity.Del == false).Where(i=>i.HistoryNextId==0).ToListAsync();
+            return View(entities);
         }
 
         // POST: Entities/Create
