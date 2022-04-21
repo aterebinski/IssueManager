@@ -7,22 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IssueManager.Data;
 using IssueManager.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace IssueManager.Controllers
 {
     public class EntitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public EntitiesController(ApplicationDbContext context)
+        public EntitiesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Entities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Entities.Where(i => i.Del == false).OrderBy(i=>i.Name).ToListAsync());
+            return View(await _context.Entities.Where(i => i.Del == false).Where(i=>i.HistoryNextId==0).OrderBy(i=>i.Name).ToListAsync());
         }
 
         // GET: Entities/Details/5
@@ -59,6 +62,8 @@ namespace IssueManager.Controllers
             if (ModelState.IsValid)
             {
                 entity.Del = false;
+                entity.CreateDateTime = DateTime.Now;  
+                entity.CreateUserId = _userManager.GetUserId(HttpContext.User);
                 _context.Add(entity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -98,6 +103,8 @@ namespace IssueManager.Controllers
             {
                 try
                 {
+                    entity.ModifyDateTime = DateTime.Now;
+                    entity.ModifyUserId = _userManager.GetUserId(HttpContext.User);
                     _context.Update(entity);
                     await _context.SaveChangesAsync();
                 }
@@ -143,6 +150,8 @@ namespace IssueManager.Controllers
             var entity = await _context.Entities.FindAsync(id);
             //_context.Entities.Remove(entity);
             entity.Del = true;
+            entity.ModifyUserId = _userManager.GetUserId(HttpContext.User);
+            entity.ModifyDateTime = DateTime.Now;
             _context.Update(entity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

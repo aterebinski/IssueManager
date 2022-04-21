@@ -25,7 +25,7 @@ namespace IssueManager.Controllers
         // GET: EntityGroups
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EntityGroups.Where(i=>i.Del == false).OrderBy(i=>i.Name).ToListAsync());
+            return View(await _context.EntityGroups.Where(i=>i.Del == false).Where(i=>i.HistoryNextId==0).OrderBy(i=>i.Name).ToListAsync());
         }
 
         // GET: EntityGroups/Details/5
@@ -104,6 +104,8 @@ namespace IssueManager.Controllers
             {
                 try
                 {
+                    entityGroup.ModifyDateTime = DateTime.Now; 
+                    entityGroup.ModifyUserId = _userManager.GetUserId(HttpContext.User);   
                     _context.Update(entityGroup);
                     await _context.SaveChangesAsync();
                 }
@@ -149,6 +151,8 @@ namespace IssueManager.Controllers
             var entityGroup = await _context.EntityGroups.FindAsync(id);
             //_context.EntityGroups.Remove(entityGroup);
             entityGroup.Del = true;
+            entityGroup.ModifyDateTime = DateTime.Now;
+            entityGroup.ModifyUserId = _userManager.GetUserId(HttpContext.User);
             _context.Update(entityGroup);   
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
