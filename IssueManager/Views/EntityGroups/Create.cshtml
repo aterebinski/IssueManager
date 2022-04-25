@@ -1,4 +1,6 @@
-﻿@model IssueManager.Models.EntityGroup
+﻿@model IssueManager.Models.EntityGroupElementsViewModel
+
+
 
 @{
     ViewData["Title"] = "Create";
@@ -13,9 +15,16 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="EntityGroup.Name" class="control-label"></label>
+                <input asp-for="EntityGroup.Name" class="form-control" />
+                <span asp-validation-for="EntityGroup.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @foreach (var item in Model.Entities)
+               {                   
+                    @Html.CheckBoxFor(m=>Model.IsChecked[item]);
+                    @Html.DisplayFor(r=>item.Name);
+               }    
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

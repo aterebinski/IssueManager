@@ -49,8 +49,17 @@ namespace IssueManager.Controllers
         // GET: EntityGroups/Create
         public IActionResult Create()
         {
-            ICollection<Entity> entities = _context.Entities.ToList();  
-            return View();
+            List<Entity> entities = _context.Entities.Where(i=>i.Del == false).ToList();
+            EntityGroupElementsViewModel EntityGroupElementsVM = new EntityGroupElementsViewModel();
+            EntityGroupElementsVM.Entities = entities;
+            foreach (Entity item in EntityGroupElementsVM.Entities)
+            {
+                EntityGroupElementsVM.IsChecked[item] = false;
+            }
+
+
+            //ViewBag.Entities = entities;   
+            return View(EntityGroupElementsVM);
         }
 
         // POST: EntityGroups/Create
