@@ -54,7 +54,7 @@ namespace IssueManager.Controllers
             EntityGroupElementsVM.Entities = entities;
             foreach (Entity item in EntityGroupElementsVM.Entities)
             {
-                EntityGroupElementsVM.IsChecked[item] = false;
+                EntityGroupElementsVM.IsChecked[item.Id] = false;
             }
 
 
@@ -67,15 +67,45 @@ namespace IssueManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Del")] EntityGroup entityGroup)
+        //public async Task<IActionResult> Create([Bind("Id,Name,Del")] EntityGroupElementsViewModel entityGroupElementsVM)
+        public async Task<IActionResult> Create(EntityGroupElementsViewModel entityGroupElementsVM)
         {
+            if (entityGroupElementsVM is null)
+            {
+                throw new ArgumentNullException(nameof(entityGroupElementsVM));
+            }
+
+            EntityGroup entityGroup = new EntityGroup();    
+
             if (ModelState.IsValid)
             {
                 entityGroup.Del = false;
                 entityGroup.CreateDateTime = DateTime.Now;
                 entityGroup.CreateUserId = _userManager.GetUserId(HttpContext.User);
+                entityGroup.Name = entityGroupElementsVM.Name;
                 _context.Add(entityGroup);
                 await _context.SaveChangesAsync();
+
+                foreach (KeyValuePair<int, bool> item in entityGroupElementsVM.IsChecked)
+                {
+                    if (item.Value==true)
+                    {
+                        EntityGroupElement entityGroupElement = new EntityGroupElement();
+                        entityGroupElement.CreateDateTime = DateTime.Now;
+                        entityGroupElement.CreateUserId = _userManager.GetUserId(User);
+                        entityGroupElement.EntityGroupId = entityGroup.Id;
+                        entityGroupElement.EntityId = item.Key;
+                        _context.Add(entityGroupElement);
+                        await _context.SaveChangesAsync();
+                    }
+                    
+                }
+
+
+
+
+
+                //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(entityGroup);
