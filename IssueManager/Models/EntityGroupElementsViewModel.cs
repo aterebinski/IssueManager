@@ -4,6 +4,7 @@ namespace IssueManager.Models
 {
     public class EntityGroupElementsViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         //public List<EntityViewModel> EntitiesVM { get; set; } = new List<EntityViewModel>();
         public List<Entity> Entities { get; set; } = new List<Entity>();

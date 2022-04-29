@@ -124,7 +124,24 @@ namespace IssueManager.Controllers
             {
                 return NotFound();
             }
-            return View(entityGroup);
+
+            EntityGroupElementsViewModel entityGroupElementsVM = new EntityGroupElementsViewModel();
+            entityGroupElementsVM.Name = entityGroup.Name;
+            entityGroupElementsVM.Id = entityGroup.Id;
+
+            List<Entity> Entities = _context.Entities.Where(e => e.Del == false).ToList();
+
+            bool match;
+            foreach (var item in Entities)
+            {
+                entityGroupElementsVM.Entities.Add(item);
+
+                match = _context.EntityGroupElements.Where(i => i.EntityGroupId == entityGroup.Id).Where(i => i.EntityId == item.Id).Where(i => i.Del == false).Count() > 0;
+                entityGroupElementsVM.IsChecked[item.Id] = match;
+            }
+
+
+            return View(entityGroupElementsVM);
         }
 
         // POST: EntityGroups/Edit/5
@@ -132,9 +149,9 @@ namespace IssueManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Del")] EntityGroup entityGroup)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Del")] EntityGroupElementsViewModel entityGroupElementsVM)
         {
-            if (id != entityGroup.Id)
+            if (id != entityGroupElementsVM.Id)
             {
                 return NotFound();
             }
@@ -143,14 +160,39 @@ namespace IssueManager.Controllers
             {
                 try
                 {
+                    EntityGroup entityGroup = _context.EntityGroups.SingleOrDefault(i => i.Id == id);
                     entityGroup.ModifyDateTime = DateTime.Now; 
                     entityGroup.ModifyUserId = _userManager.GetUserId(HttpContext.User);   
+                    entityGroup.Name = entityGroupElementsVM.Name;
                     _context.Update(entityGroup);
                     await _context.SaveChangesAsync();
+
+                    EntityGroupElement entityGroupElement;
+
+                    foreach (var item in entityGroupElementsVM.Entities)
+                    {
+                        entityGroupElement = _context.EntityGroupElements.Where(i => i.EntityGroupId == entityGroup.Id).Where(i => i.EntityId == item.Id).SingleOrDefault();
+                        if (entityGroupElement != null) //istnieje
+                        {
+                            entityGroupElement.ModifyDateTime = DateTime.Now;
+                            entityGroupElement.ModifyUserId = _userManager.GetUserId(HttpContext.User);
+                        }
+                        else
+                        {
+                            entityGroupElement = new EntityGroupElement();
+                            entityGroupElement.CreateDateTime = DateTime.Now;
+                            entityGroupElement.CreateUserId = _userManager.GetUserId(HttpContext.User);
+                        }
+
+                        entityGroupElement.Del = !entityGroupElementsVM.IsChecked[item.Id];
+                        
+                        _context.Update(entityGroupElement);
+                        _context.SaveChanges();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EntityGroupExists(entityGroup.Id))
+                    if (!EntityGroupExists(entityGroupElementsVM.Id))
                     {
                         return NotFound();
                     }
@@ -161,7 +203,7 @@ namespace IssueManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(entityGroup);
+            return View(entityGroupElementsVM);
         }
 
         // GET: EntityGroups/Delete/5
