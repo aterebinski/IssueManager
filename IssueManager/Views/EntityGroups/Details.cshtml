@@ -1,4 +1,4 @@
-﻿@model IssueManager.Models.EntityGroup
+﻿@model IssueManager.Models.EntityGroupElementsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -16,6 +16,13 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
+        <dt class = "col-sm-2">
+            <b>Entities</b>
+        </dt>
+        @foreach (var item in query)
+       {
+           
+       }
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Del)
         </dt>

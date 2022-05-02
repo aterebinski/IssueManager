@@ -43,7 +43,27 @@ namespace IssueManager.Controllers
                 return NotFound();
             }
 
-            return View(entityGroup);
+            EntityGroupElementsViewModel entityGroupElementsVM = new EntityGroupElementsViewModel();
+            entityGroupElementsVM.Name = entityGroup.Name;
+            entityGroupElementsVM.Id = entityGroup.Id;
+
+            //var entities = _context.Entities.Where(i => i.Del == false).ToList();
+
+            var query = from entity in _context.Entities
+                        join entityGroupElement in _context.EntityGroupElements on entity.Id equals entityGroupElement.EntityId into entityGroupElements
+                        from i in entityGroupElements.DefaultIfEmpty()
+                        select new { entity,
+                            GroupId = i.EntityGroupId
+                        
+                        };
+
+            foreach (var item in query)
+            {
+                entityGroupElementsVM.Entities.Add()
+            }
+
+            //return View(entityGroup);
+            return View(entityGroupElementsVM);
         }
 
         // GET: EntityGroups/Create
@@ -149,7 +169,7 @@ namespace IssueManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Del")] EntityGroupElementsViewModel entityGroupElementsVM)
+        public async Task<IActionResult> Edit(int id, EntityGroupElementsViewModel entityGroupElementsVM)
         {
             if (id != entityGroupElementsVM.Id)
             {
@@ -169,26 +189,41 @@ namespace IssueManager.Controllers
 
                     EntityGroupElement entityGroupElement;
 
-                    foreach (var item in entityGroupElementsVM.Entities)
+                    var Entities = _context.Entities.Where(i => i.Del == false).ToList();
+
+                    foreach (var item in Entities)
                     {
                         entityGroupElement = _context.EntityGroupElements.Where(i => i.EntityGroupId == entityGroup.Id).Where(i => i.EntityId == item.Id).SingleOrDefault();
                         if (entityGroupElement != null) //istnieje
                         {
                             entityGroupElement.ModifyDateTime = DateTime.Now;
                             entityGroupElement.ModifyUserId = _userManager.GetUserId(HttpContext.User);
+                            entityGroupElement.Del = !entityGroupElementsVM.IsChecked[item.Id];
+                            _context.Update(entityGroupElement);
+                            _context.SaveChanges();
                         }
                         else
                         {
-                            entityGroupElement = new EntityGroupElement();
-                            entityGroupElement.CreateDateTime = DateTime.Now;
-                            entityGroupElement.CreateUserId = _userManager.GetUserId(HttpContext.User);
-                        }
+                            
+                            if (entityGroupElementsVM.IsChecked[item.Id] == true)
+                            {
+                                entityGroupElement = new EntityGroupElement();
+                                entityGroupElement.CreateDateTime = DateTime.Now;
+                                entityGroupElement.CreateUserId = _userManager.GetUserId(HttpContext.User);
+                                entityGroupElement.Del = false;
+                                entityGroupElement.EntityGroupId = entityGroup.Id;
+                                entityGroupElement.EntityId = item.Id;
 
-                        entityGroupElement.Del = !entityGroupElementsVM.IsChecked[item.Id];
-                        
-                        _context.Update(entityGroupElement);
-                        _context.SaveChanges();
+                                _context.Update(entityGroupElement);
+                                _context.SaveChanges();
+                            }
+
+                        }
                     }
+
+                        
+                        
+                        
                 }
                 catch (DbUpdateConcurrencyException)
                 {
