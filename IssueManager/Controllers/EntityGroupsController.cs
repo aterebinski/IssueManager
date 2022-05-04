@@ -47,19 +47,28 @@ namespace IssueManager.Controllers
             entityGroupElementsVM.Name = entityGroup.Name;
             entityGroupElementsVM.Id = entityGroup.Id;
 
-            //var entities = _context.Entities.Where(i => i.Del == false).ToList();
+            var entities = _context.Entities.Where(i => i.Del == false).ToList();
 
-            var query = from entity in _context.Entities
+            /*var query = from entity in _context.Entities
                         join entityGroupElement in _context.EntityGroupElements on entity.Id equals entityGroupElement.EntityId into entityGroupElements
                         from i in entityGroupElements.DefaultIfEmpty()
                         select new { entity,
                             GroupId = i.EntityGroupId
                         
-                        };
+                        };*/
 
-            foreach (var item in query)
+            foreach (var item in entities)
             {
-                entityGroupElementsVM.Entities.Add()
+                entityGroupElementsVM.Entities.Add(item);
+                EntityGroupElement entityGroupElement = await _context.EntityGroupElements.Where(i => i.Del == false).Where(i => i.EntityGroupId == entityGroup.Id).Where(i => i.EntityId == item.Id).FirstOrDefaultAsync();
+                if (entityGroupElement != null)
+                {
+                    entityGroupElementsVM.IsChecked[item.Id] = true;
+                }
+                else
+                {
+                    entityGroupElementsVM.IsChecked[item.Id] = false;
+                }
             }
 
             //return View(entityGroup);

@@ -16,19 +16,19 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            <b>Entities</b>
-        </dt>
-        @foreach (var item in query)
+   
+    </dl>
+     <h4>Entities</h4>
+    <dl class="row">
+        @for (var i = 0; i< Model.Entities.Count; i++)
        {
-           
-       }
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Del)
+            @Model.Entities[i].Name
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Del)
+            @Html.DisplayFor(m=>Model.IsChecked[Model.Entities[i].Id])
         </dd>
+       }
     </dl>
 </div>
 <div>
