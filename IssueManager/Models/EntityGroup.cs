@@ -11,6 +11,7 @@ namespace IssueManager.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        public int ColorId { get; set; }
         public bool Del { get; set; }
         public DateTime CreateDateTime { get; set; }
         public string CreateUserId { get; set; }
@@ -20,5 +21,6 @@ namespace IssueManager.Models
         public int HistoryNextId { get; set; }
 
         public virtual ICollection<EntityGroupElement> EntityGroupElements { get; set; }
+        public virtual EntityGroupColor Color { get; set; }
     }
 }

@@ -61,5 +61,6 @@ namespace IssueManager.Data
         public virtual DbSet<JobNote> JobNotes { get; set; }
         public virtual DbSet<EntityGroup> EntityGroups { get; set; }
         public virtual DbSet<EntityGroupElement> EntityGroupElements { get; set; }
+        public DbSet<IssueManager.Models.EntityGroupColor> EntityGroupColor { get; set; }
     }
 }
