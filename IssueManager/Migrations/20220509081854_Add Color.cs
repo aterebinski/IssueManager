@@ -4,7 +4,7 @@
 
 namespace IssueManager.Migrations
 {
-    public partial class AddEntityGroupColors : Migration
+    public partial class AddColor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,39 +30,13 @@ namespace IssueManager.Migrations
                 {
                     table.PrimaryKey("PK_EntityGroupColor", x => x.Id);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EntityGroups_ColorId",
-                schema: "db",
-                table: "EntityGroups",
-                column: "ColorId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_EntityGroups_EntityGroupColor_ColorId",
-                schema: "db",
-                table: "EntityGroups",
-                column: "ColorId",
-                principalSchema: "db",
-                principalTable: "EntityGroupColor",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_EntityGroups_EntityGroupColor_ColorId",
-                schema: "db",
-                table: "EntityGroups");
-
             migrationBuilder.DropTable(
                 name: "EntityGroupColor",
                 schema: "db");
-
-            migrationBuilder.DropIndex(
-                name: "IX_EntityGroups_ColorId",
-                schema: "db",
-                table: "EntityGroups");
 
             migrationBuilder.DropColumn(
                 name: "ColorId",

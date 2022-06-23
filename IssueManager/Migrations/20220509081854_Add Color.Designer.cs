@@ -4,6 +4,7 @@ using IssueManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220509081854_Add Color")]
+    partial class AddColor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,8 +256,6 @@ namespace IssueManager.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ColorId");
 
                     b.ToTable("EntityGroups", "db");
                 });
@@ -542,21 +542,10 @@ namespace IssueManager.Migrations
                     b.ToTable("AspNetUserTokens", "db");
                 });
 
-            modelBuilder.Entity("IssueManager.Models.EntityGroup", b =>
-                {
-                    b.HasOne("IssueManager.Models.EntityGroupColor", "Color")
-                        .WithMany("EntityGroups")
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-                });
-
             modelBuilder.Entity("IssueManager.Models.EntityGroupElement", b =>
                 {
                     b.HasOne("IssueManager.Models.EntityGroup", "EntityGroup")
-                        .WithMany("EntityGroupElements")
+                        .WithMany()
                         .HasForeignKey("EntityGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -626,16 +615,6 @@ namespace IssueManager.Migrations
             modelBuilder.Entity("IssueManager.Models.Entity", b =>
                 {
                     b.Navigation("EntityGroupElements");
-                });
-
-            modelBuilder.Entity("IssueManager.Models.EntityGroup", b =>
-                {
-                    b.Navigation("EntityGroupElements");
-                });
-
-            modelBuilder.Entity("IssueManager.Models.EntityGroupColor", b =>
-                {
-                    b.Navigation("EntityGroups");
                 });
 #pragma warning restore 612, 618
         }

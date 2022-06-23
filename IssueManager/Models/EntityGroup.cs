@@ -11,7 +11,7 @@ namespace IssueManager.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int ColorId { get; set; }
+        public int ColorId { get; set; } = 0;
         public bool Del { get; set; }
         public DateTime CreateDateTime { get; set; }
         public string CreateUserId { get; set; }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220504133207_Add EntityGroupColors")]
-    partial class AddEntityGroupColors
+    [Migration("20220509082021_Add Color Constraints")]
+    partial class AddColorConstraints
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -547,7 +547,7 @@ namespace IssueManager.Migrations
             modelBuilder.Entity("IssueManager.Models.EntityGroup", b =>
                 {
                     b.HasOne("IssueManager.Models.EntityGroupColor", "Color")
-                        .WithMany()
+                        .WithMany("EntityGroups")
                         .HasForeignKey("ColorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -633,6 +633,11 @@ namespace IssueManager.Migrations
             modelBuilder.Entity("IssueManager.Models.EntityGroup", b =>
                 {
                     b.Navigation("EntityGroupElements");
+                });
+
+            modelBuilder.Entity("IssueManager.Models.EntityGroupColor", b =>
+                {
+                    b.Navigation("EntityGroups");
                 });
 #pragma warning restore 612, 618
         }
