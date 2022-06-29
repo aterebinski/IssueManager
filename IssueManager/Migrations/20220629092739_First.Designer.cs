@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220419114030_Change Status property in Assignment model from int to enum AssignmentStatus")]
-    partial class ChangeStatuspropertyinAssignmentmodelfrominttoenumAssignmentStatus
+    [Migration("20220629092739_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("db")
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -228,6 +228,9 @@ namespace IssueManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("ColorId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
@@ -255,6 +258,25 @@ namespace IssueManager.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EntityGroups", "db");
+                });
+
+            modelBuilder.Entity("IssueManager.Models.EntityGroupColor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("HEX")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EntityGroupColor", "db");
                 });
 
             modelBuilder.Entity("IssueManager.Models.EntityGroupElement", b =>
@@ -371,6 +393,9 @@ namespace IssueManager.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("HistoryPreviousId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifyDateTime")

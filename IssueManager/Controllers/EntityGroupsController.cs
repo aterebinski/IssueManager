@@ -119,6 +119,7 @@ namespace IssueManager.Controllers
                 {
                     if (item.Value==true)
                     {
+
                         EntityGroupElement entityGroupElement = new EntityGroupElement();
                         entityGroupElement.CreateDateTime = DateTime.Now;
                         entityGroupElement.CreateUserId = _userManager.GetUserId(User);

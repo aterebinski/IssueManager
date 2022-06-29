@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IssueManager.Models.Job>
+﻿@model List<IssueManager.Models.JobsViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,37 +13,37 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EntityId)
+                EntityId
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AssignmentId)
+                AssignmentId
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Del)
+                Del
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Status
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Checked)
+                Checked
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreateDateTime)
+                CreateDateTime
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreateUserId)
+                CreateUserId
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModifyDateTime)
+                ModifyDateTime
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModifyUserId)
+                ModifyUserId
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HistoryPreviousId)
+                HistoryPreviousId
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HistoryNextId)
+                HistoryNextId
             </th>
             <th></th>
         </tr>

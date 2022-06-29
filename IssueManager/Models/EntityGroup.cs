@@ -21,6 +21,6 @@ namespace IssueManager.Models
         public int HistoryNextId { get; set; }
 
         public virtual ICollection<EntityGroupElement> EntityGroupElements { get; set; }
-        public virtual EntityGroupColor Color { get; set; }
+        //public virtual EntityGroupColor Color { get; set; }
     }
 }

@@ -50,9 +50,18 @@ namespace IssueManager.Controllers
         }
 
         // GET: Assignments/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            AssignmentsViewModel assignmentsVM = new AssignmentsViewModel();
+
+            assignmentsVM.entities = _context.Entities.Where(i => i.Del == false).ToList();
+            assignmentsVM.entityGroups = _context.EntityGroups.Where(i => i.Del == false).ToList();
+            foreach (var item in assignmentsVM.entities)
+            {
+                assignmentsVM.EntityCheck[item.Id] = false;
+            }
+
+            return View(assignmentsVM);
         }
 
         // POST: Assignments/Create
@@ -60,10 +69,18 @@ namespace IssueManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Text,Del,Status,CreateDateTime,CreateUserId,ModifyDateTime,ModifyUserId,HistoryPreviousId,HistoryNextId")] Assignment assignment)
+        public async Task<IActionResult> Create( AssignmentsViewModel assignmentVM)
         {
+            if (assignmentVM == null)
+            {
+                throw new ArgumentNullException(nameof(assignmentVM));
+            }
+
+            Assignment assignment = new Assignment();
+
             if (ModelState.IsValid)
             {
+                assignment.Name = assignmentVM.assignment.Name;
                 assignment.CreateDateTime = DateTime.Now;
                 //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 assignment.CreateUserId = _userManager.GetUserId(HttpContext.User);
@@ -73,6 +90,31 @@ namespace IssueManager.Controllers
                 assignment.Status = (int)AssignmentStatus.ToPlan;
                 _context.Add(assignment);
                 await _context.SaveChangesAsync();
+
+
+                foreach (KeyValuePair<int, bool> item in assignmentVM.EntityCheck)
+                {
+                    if (item.Value==true)
+                    {
+                        Console.WriteLine("====================================>Dodanie do tabeli JOBS");
+                        Job job = new Job();
+                        job.Status = JobStatus.Added;
+                        job.CreateDateTime = DateTime.Now;
+                        job.CreateUserId = _userManager.GetUserId(HttpContext.User);
+                        job.Del = false;
+                        job.AssignmentId = assignment.Id;
+                        job.EntityId = item.Key;
+
+                        
+
+                        //TODO: nie działa dodawanie do tabeli jobs. Tabela JOBS pozostaj pusta
+
+                        _context.Add(job);
+                        await   _context.SaveChangesAsync();
+                    }
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             return View(assignment);

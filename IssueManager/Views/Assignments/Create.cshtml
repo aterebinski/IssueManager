@@ -1,4 +1,4 @@
-﻿@model IssueManager.Models.Assignment
+﻿@model IssueManager.Models.AssignmentsViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,14 +13,33 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="@Model.assignment.Name" class="control-label"></label>
+                <input asp-for="@Model.assignment.Name" class="form-control" />
+                <span asp-validation-for="@Model.assignment.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Text" class="control-label"></label>
-                <input asp-for="Text" class="form-control" />
-                <span asp-validation-for="Text" class="text-danger"></span>
+                <label asp-for="@Model.assignment.Text" class="control-label"></label>
+                <input asp-for="@Model.assignment.Text" class="form-control" />
+                <span asp-validation-for="@Model.assignment.Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <table>
+                    <tr>
+                        <th>Entity</th>
+                        <th></th>
+                    </tr>
+                    @for (var i = 0; i < Model.entities.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(m => m.EntityCheck[Model.entities[i].Id])
+                            </td>
+                            <td>
+                                @Model.entities[i].Name
+                            </td>
+                        </tr>    
+                    }
+                </table>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

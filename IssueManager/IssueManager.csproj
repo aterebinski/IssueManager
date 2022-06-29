@@ -8,27 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20220314141357_Rename User Tables.cs" />
-    <Compile Remove="Migrations\20220314141357_Rename User Tables.Designer.cs" />
-    <Compile Remove="Migrations\20220315100820_Change User tables names.cs" />
-    <Compile Remove="Migrations\20220315100820_Change User tables names.Designer.cs" />
-    <Compile Remove="Migrations\20220316075117_Rename Database.cs" />
-    <Compile Remove="Migrations\20220316075117_Rename Database.Designer.cs" />
-    <Compile Remove="Migrations\20220316080510_Rename Identity Tables.cs" />
-    <Compile Remove="Migrations\20220316080510_Rename Identity Tables.Designer.cs" />
-    <Compile Remove="Migrations\20220316080922_Rename Identity Tables.cs" />
-    <Compile Remove="Migrations\20220316080922_Rename Identity Tables.Designer.cs" />
-    <Compile Remove="Migrations\20220316082528_Rename Identity Tables.cs" />
-    <Compile Remove="Migrations\20220316082528_Rename Identity Tables.Designer.cs" />
-    <Compile Remove="Migrations\20220316090624_Rename Identity Tables1%27.cs" />
-    <Compile Remove="Migrations\20220316090624_Rename Identity Tables1%27.Designer.cs" />
-    <Compile Remove="Migrations\20220316113926_Rename Identity Tables1%27.cs" />
-    <Compile Remove="Migrations\20220316113926_Rename Identity Tables1%27.Designer.cs" />
-    <Compile Remove="Migrations\20220316123221_Rename Identity Tables.cs" />
-    <Compile Remove="Migrations\20220316123221_Rename Identity Tables.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.4" />

@@ -22,7 +22,31 @@ namespace IssueManager.Controllers
         // GET: Jobs
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Jobs.ToListAsync());
+            var jobs = await (from j in _context.Jobs
+                              join e in _context.Entities on j.EntityId equals e.Id
+                              join a in _context.Assignments on j.AssignmentId equals a.Id
+                              join n in _context.JobNotes on j.Id equals n.JobId
+                              where j.Del == false
+                              select new JobsViewModel
+                              {
+                                  Id = j.Id,
+                                  AssignmentId = a.Id,
+                                  AssignmentName = a.Name,
+                                  Checked = j.Checked,
+                                  CreateDateTime = j.CreateDateTime,
+                                  CreateUserId = j.CreateUserId,
+                                  EntityId = e.Id,
+                                  EntityName = e.Name,
+                                  Note = n.Text,
+                                  Status = j.Status,
+                                  Del = j.Del,
+                                  HistoryNextId = j.HistoryNextId,
+                                  HistoryPreviousId = j.HistoryPreviousId,
+                                  ModifyDateTime = j.ModifyDateTime,
+                                  ModifyUserId = j.ModifyUserId
+                              }).ToListAsync();
+            return View(jobs);
+              //return View(await _context.Jobs.ToListAsync());
         }
 
         // GET: Jobs/Details/5
@@ -88,6 +112,8 @@ namespace IssueManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,EntityId,AssignmentId,Del,Status,Checked,CreateDateTime,CreateUserId,ModifyDateTime,ModifyUserId,HistoryPreviousId,HistoryNextId")] Job job)
         {
+            //TODO: Edytowanie JOBów
+
             if (id != job.Id)
             {
                 return NotFound();

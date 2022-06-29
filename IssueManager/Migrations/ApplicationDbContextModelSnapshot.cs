@@ -18,7 +18,7 @@ namespace IssueManager.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("db")
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -255,8 +255,6 @@ namespace IssueManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColorId");
-
                     b.ToTable("EntityGroups", "db");
                 });
 
@@ -393,6 +391,9 @@ namespace IssueManager.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("HistoryPreviousId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifyDateTime")
@@ -542,17 +543,6 @@ namespace IssueManager.Migrations
                     b.ToTable("AspNetUserTokens", "db");
                 });
 
-            modelBuilder.Entity("IssueManager.Models.EntityGroup", b =>
-                {
-                    b.HasOne("IssueManager.Models.EntityGroupColor", "Color")
-                        .WithMany("EntityGroups")
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-                });
-
             modelBuilder.Entity("IssueManager.Models.EntityGroupElement", b =>
                 {
                     b.HasOne("IssueManager.Models.EntityGroup", "EntityGroup")
@@ -631,11 +621,6 @@ namespace IssueManager.Migrations
             modelBuilder.Entity("IssueManager.Models.EntityGroup", b =>
                 {
                     b.Navigation("EntityGroupElements");
-                });
-
-            modelBuilder.Entity("IssueManager.Models.EntityGroupColor", b =>
-                {
-                    b.Navigation("EntityGroups");
                 });
 #pragma warning restore 612, 618
         }

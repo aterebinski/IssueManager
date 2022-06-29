@@ -10,7 +10,7 @@ namespace IssueManager.Models
         public string HEX { get; set; }
         public int Order { get; set; }
 
-        public virtual ICollection<EntityGroup> EntityGroups { get; set; }
+        //public virtual ICollection<EntityGroup> EntityGroups { get; set; }
 
     }
 }
