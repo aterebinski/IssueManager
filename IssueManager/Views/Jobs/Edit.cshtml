@@ -1,0 +1,84 @@
+﻿@model IssueManager.Models.Job
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Job</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="EntityId" class="control-label"></label>
+                <input asp-for="EntityId" class="form-control" />
+                <span asp-validation-for="EntityId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AssignmentId" class="control-label"></label>
+                <input asp-for="AssignmentId" class="form-control" />
+                <span asp-validation-for="AssignmentId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Del" /> @Html.DisplayNameFor(model => model.Del)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Checked" /> @Html.DisplayNameFor(model => model.Checked)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateDateTime" class="control-label"></label>
+                <input asp-for="CreateDateTime" class="form-control" />
+                <span asp-validation-for="CreateDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateUserId" class="control-label"></label>
+                <input asp-for="CreateUserId" class="form-control" />
+                <span asp-validation-for="CreateUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifyDateTime" class="control-label"></label>
+                <input asp-for="ModifyDateTime" class="form-control" />
+                <span asp-validation-for="ModifyDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifyUserId" class="control-label"></label>
+                <input asp-for="ModifyUserId" class="form-control" />
+                <span asp-validation-for="ModifyUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HistoryPreviousId" class="control-label"></label>
+                <input asp-for="HistoryPreviousId" class="form-control" />
+                <span asp-validation-for="HistoryPreviousId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HistoryNextId" class="control-label"></label>
+                <input asp-for="HistoryNextId" class="form-control" />
+                <span asp-validation-for="HistoryNextId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
